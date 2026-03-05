@@ -1,0 +1,40 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+*.egg
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+.cursor/
+
+# OpenSpiel 本地构建（若在仓库内；整目录不推送，需单独 clone/安装）
+open_spiel/
+
+# 日志与临时
+*.log
+*.tmp
+.env
+.env.local
+
+# 生成的大文件（训练输出，可选提交小示例）
+data/subgame_strategy_cfr.json
+data/subgame_strategy_cfr_test.json
+data/leduc_verify_policy.json
+data/leduc_test.json

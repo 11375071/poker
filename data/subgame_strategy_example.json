@@ -1,0 +1,17 @@
+{
+  "default": {
+    "fold": 0.05,
+    "check_or_call": 0.70,
+    "50%": 0.15,
+    "100%": 0.10
+  },
+  "preflop_AA_none_none": {
+    "check_or_call": 0.2,
+    "50%": 0.5,
+    "100%": 0.3
+  },
+  "preflop_22_none_none": {
+    "fold": 0.6,
+    "check_or_call": 0.4
+  }
+}

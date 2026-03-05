@@ -1,0 +1,12 @@
+# Poker AI project (6-max NLHE with OpenSpiel)
+# Use from project root: .venv\Scripts\pip install -r requirements.txt
+
+# OpenSpiel: install from local build or pip if available
+# pip install open_spiel   # or: pip install -e ./open_spiel
+numpy>=1.21.5
+absl-py>=0.10.0
+scipy>=1.10.1
+ml-collections>=0.1.1
+
+# Optional: for 6-max via python_pokerkit_wrapper (Stage A1)
+pokerkit>=0.4.0
