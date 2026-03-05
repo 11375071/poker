@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 阶段 A5 验收：使用 env 包中的 SixMaxEnv 封装跑若干手牌，检查接口可用性。
-在项目根目录执行: .venv\\Scripts\\python.exe scripts\\verify_env_wrapper.py
+在项目根目录执行: python scripts/verify_env_wrapper.py
 """
 import sys
 import os

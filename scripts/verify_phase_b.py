@@ -2,8 +2,8 @@
 """
 阶段 B 验收脚本：Leduc 策略训练/加载/评估、6-max 抽象与子游戏对接。
 用法（项目根目录）：
-  .venv\\Scripts\\python.exe scripts\\verify_phase_b.py
-  .venv\\Scripts\\python.exe scripts\\verify_phase_b.py --skip_train
+  python scripts/verify_phase_b.py
+  python scripts/verify_phase_b.py --skip_train
 """
 from __future__ import annotations
 

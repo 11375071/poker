@@ -21,7 +21,7 @@
 | **阶段 B** | Leduc CFR+ 训练与评估（`train_leduc_cfr.py`、`evaluate_leduc.py`）、策略 IO（`policy_io.py`）。 |
 | **抽象与管线** | 6-max 信息抽象与行动抽象（`abstraction.py`）、子游戏策略对接（`subgame_strategy.py`）、`get_abstract_state_key_from_env`、`map_abstract_to_legal`、JSON 策略加载（`JsonAbstractStrategyLookup`）。 |
 | **Step 1–4** | env 暴露 pot/stacks/action_id_to_info；抽象状态键生成；抽象→合法动作映射；`run_six_max_with_strategy.py` 在 6-max 中用 JSON 策略运行。 |
-| **6-max 子游戏 CFR** | BTN vs BB flop→river 抽象子游戏（`six_max_subgame.py`）、3 尺度/无 flop-turn raise/仅 river all-in raise（`six_max_cfr_config.py`）、收益表（`payoff_table.py`）、CFR+ 求解与 169 键导出、训练脚本 `train_six_max_subgame_cfr.py`、GTO 开池范围占位 `data/gto_open_range_btn.json`。 |
+| **6-max 子游戏 CFR** | BTN vs BB flop→river 抽象子游戏（`six_max_subgame.py`）、3 尺度/无 flop-turn raise/仅 river all-in raise（`six_max_cfr_config.py`）、收益表（`payoff_table.py`）、CFR+ 求解与 169 键导出、训练脚本 `train_six_max_subgame_cfr.py`、6-max 子游戏策略范围可视化 `six_max_range_viewer.py`、GTO 开池范围占位 `data/gto_open_range_btn.json`。 |
 
 ### 1.3 当前缺口与后续方向
 
@@ -64,6 +64,8 @@
 
 ### 2.3 在 Linux 上配置环境
 
+**Python 版本**：核心与 OpenSpiel/Leduc 管线需 **Python 3.10+**；**6-max 环境（pokerkit）需 Python 3.11+**。若仅跑 Leduc 与阶段 B 验收，3.10 即可；完整 6-max 与 `verify_6max_env`/`verify_env_wrapper` 建议使用 3.11+。
+
 ```bash
 cd /path/to/poker
 python3 -m venv .venv
@@ -71,13 +73,22 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-若 OpenSpiel 为本地源码安装（非 pip）：
+若系统创建 venv 时提示 `ensurepip is not available`，可先安装 `python3.10-venv`（或 `python3.11-venv`）再创建；或使用无 pip 的 venv 后手动安装 pip：
 
 ```bash
+python3 -m venv .venv --without-pip
+curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py && .venv/bin/python3 get-pip.py && rm get-pip.py
+.venv/bin/pip install -r requirements.txt
+```
+
+若 OpenSpiel 使用本地源码安装（替代 PyPI 的 `open-spiel`）：
+
+```bash
+pip uninstall open-spiel  # 若已通过 pip 安装
 pip install -e ./open_spiel
 ```
 
-依赖：Python 3.10+、`numpy`、`absl-py`、`pokerkit`、`open_spiel`（pip 或本地构建）。
+依赖：Python 3.10+（3.11+ 建议，以使用 pokerkit）、`numpy`、`absl-py`、`open-spiel`（见上）。6-max 环境需额外安装 `pokerkit>=0.4.0`（仅支持 Python 3.11+）：`pip install 'pokerkit>=0.4.0'`。
 
 ### 2.4 验收（可选但建议）
 

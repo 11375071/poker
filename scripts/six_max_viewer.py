@@ -8,7 +8,7 @@
 - 底部操作区：弃牌 / 过牌或跟注 + 下注金额输入框
 
 运行方式（在项目根目录）：
-  .venv\\Scripts\\python.exe scripts\\six_max_viewer.py
+  python scripts/six_max_viewer.py
 """
 
 import math

@@ -2,7 +2,7 @@
 """
 6-max NLHE 环境验收脚本（依赖 pokerkit + python_pokerkit_wrapper）。
 在安装 pokerkit 并确保 OpenSpiel 能加载 python_pokerkit_wrapper 后运行：
-  .venv\\Scripts\\python.exe scripts\\verify_6max_env.py
+  python scripts/verify_6max_env.py
 """
 import sys
 

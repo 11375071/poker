@@ -1,12 +1,13 @@
 # Poker AI project (6-max NLHE with OpenSpiel)
-# Use from project root: .venv\Scripts\pip install -r requirements.txt
+# From project root: source .venv/bin/activate && pip install -r requirements.txt  (Linux/macOS)
+# Or: .venv\Scripts\activate ; pip install -r requirements.txt  (Windows)
 
-# OpenSpiel: install from local build or pip if available
-# pip install open_spiel   # or: pip install -e ./open_spiel
+# OpenSpiel: from PyPI (recommended on Linux) or local build: pip install -e ./open_spiel
+open-spiel>=1.0.0
 numpy>=1.21.5
 absl-py>=0.10.0
 scipy>=1.10.1
 ml-collections>=0.1.1
 
-# Optional: for 6-max via python_pokerkit_wrapper (Stage A1)
-pokerkit>=0.4.0
+# 6-max 环境（需 Python 3.11+）。完整安装请运行: scripts/setup_venv_6max.sh 或 pip install 'pokerkit>=0.4.0'
+# pokerkit>=0.4.0

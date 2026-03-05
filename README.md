@@ -6,16 +6,27 @@
 
 ## 环境要求
 
-- **Python** 3.10+
-- **C++ 工具链**（已用于本地构建 OpenSpiel）
-- **OpenSpiel**：通过本地源码编译并安装（见 `open_spiel/`）
-- **pokerkit**：用于 6-max NLHE 的 `python_pokerkit_wrapper`
+- **Python** 3.10+（仅 Leduc/OpenSpiel 可 3.10；**6-max 与 pokerkit 需 3.11+**）
+- **OpenSpiel**：推荐 `pip install open-spiel`（Linux/macOS）；或本地源码构建（见 `open_spiel/`）
+- **pokerkit**：用于 6-max NLHE 的 `python_pokerkit_wrapper`（需 Python 3.11+）
 
 ---
 
 ## 快速开始
 
 ### 1. 创建虚拟环境并安装依赖
+
+**Linux / macOS：**
+
+```bash
+cd /path/to/poker
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+# OpenSpiel 若为本地构建: pip install -e ./open_spiel
+```
+
+**Windows (PowerShell)：**
 
 ```powershell
 cd c:\Users\user\Desktop\poker
@@ -29,37 +40,56 @@ pip install -r requirements.txt
 
 | 脚本 | 说明 |
 |------|------|
-| `scripts\verify_openspiel.py` | OpenSpiel + Leduc/Kuhn/CFR 基础验收 |
-| `scripts\verify_6max_env.py` | 6-max NLHE 环境（需已安装 pokerkit） |
-| `scripts\verify_env_wrapper.py` | 阶段 A5：`env` 包封装接口验收 |
-| `scripts\verify_phase_b.py` | 阶段 B：Leduc 策略 IO、抽象、子游戏对接验收 |
-| `scripts\run_six_max_with_strategy.py` | 6-max 使用 JSON 抽象策略运行（Step 1–4 管线验收） |
-| `scripts\train_six_max_subgame_cfr.py` | 6-max 子游戏 CFR+ 训练（BTN vs BB flop→river），输出策略 JSON |
-| `scripts\six_max_viewer.py` | 6-max 牌桌可视化（Tkinter），可选运行 |
+| `scripts/verify_openspiel.py` | OpenSpiel + Leduc/Kuhn/CFR 基础验收 |
+| `scripts/verify_6max_env.py` | 6-max NLHE 环境（需已安装 pokerkit） |
+| `scripts/verify_env_wrapper.py` | 阶段 A5：`env` 包封装接口验收 |
+| `scripts/verify_phase_b.py` | 阶段 B：Leduc 策略 IO、抽象、子游戏对接验收 |
+| `scripts/run_six_max_with_strategy.py` | 6-max 使用 JSON 抽象策略运行（Step 1–4 管线验收） |
+| `scripts/train_six_max_subgame_cfr.py` | 6-max 子游戏 CFR+ 训练（BTN vs BB flop→river），输出策略 JSON |
+| `scripts/six_max_viewer.py` | 6-max 牌桌可视化（Tkinter），可选运行 |
+| `scripts/six_max_range_viewer.py` | 6-max 子游戏策略范围可视化（类似 GTO Wizard 的 169 格），可选运行 |
 
-在项目根目录执行（PowerShell）：
+在项目根目录执行（Linux / macOS 用 `python` 或 `python3`，Windows 可用 `.venv\Scripts\python.exe`）：
 
-```powershell
-.venv\Scripts\python.exe scripts\verify_openspiel.py
-.venv\Scripts\python.exe scripts\verify_6max_env.py
-.venv\Scripts\python.exe scripts\verify_env_wrapper.py
-.venv\Scripts\python.exe scripts\verify_phase_b.py --skip_train
+```bash
+python scripts/verify_openspiel.py
+python scripts/verify_6max_env.py
+python scripts/verify_env_wrapper.py
+python scripts/verify_phase_b.py --skip_train
 ```
 
 阶段 B 训练与评估：
 
-```powershell
-.venv\Scripts\python.exe scripts\train_leduc_cfr.py --output data/leduc_cfr_policy.json
-.venv\Scripts\python.exe scripts\evaluate_leduc.py data/leduc_cfr_policy.json --num_playouts 2000
+```bash
+python scripts/train_leduc_cfr.py --output data/leduc_cfr_policy.json
+python scripts/evaluate_leduc.py data/leduc_cfr_policy.json --num_playouts 2000
 ```
 
 6-max 抽象策略管线（Step 1–4）：
 
-```powershell
-.venv\Scripts\python.exe scripts\run_six_max_with_strategy.py --strategy data/subgame_strategy_example.json --hands 3
+```bash
+python scripts/run_six_max_with_strategy.py --strategy data/subgame_strategy_example.json --hands 3
 ```
 
-退出码均为 0 即表示通过。阶段 B 使用 `--skip_train` 时需已存在 `data/leduc_cfr_policy.json`（可先运行上方训练命令生成）。
+6-max 子游戏 CFR 策略范围可视化（在有图形界面的机器上运行）：
+
+```bash
+# 使用 quick_test 产出的示例策略
+python scripts/six_max_range_viewer.py \
+  --strategy data/subgame_strategy_cfr_test.json \
+  --street flop \
+  --board_bucket rainbow \
+  --actions none
+
+# 或使用正式训练得到的策略
+python scripts/six_max_range_viewer.py \
+  --strategy data/subgame_strategy_cfr.json \
+  --street flop \
+  --board_bucket rainbow \
+  --actions none
+```
+
+退出码均为 0 即表示通过。阶段 B 使用 `--skip_train` 时需已存在 `data/leduc_cfr_policy.json`（可先运行上方训练命令生成）。Linux 上完整迁移与训练说明见 **`docs/STATE_AND_LINUX_MIGRATION.md`** 与 **`docs/RUN_ON_LINUX.md`**。
 
 ### 3. 使用 6-max 环境
 
@@ -103,7 +133,8 @@ poker/
 │   ├── train_leduc_cfr.py    # Leduc CFR+ 训练
 │   ├── evaluate_leduc.py     # Leduc 策略评估
 │   ├── run_six_max_with_strategy.py  # 6-max 使用 JSON 抽象策略运行（Step 1–4 管线）
-│   └── six_max_viewer.py     # 6-max 牌桌可视化（Tkinter）
+│   ├── six_max_viewer.py     # 6-max 牌桌可视化（Tkinter）
+│   └── six_max_range_viewer.py # 6-max 子游戏策略范围可视化（Tkinter）
 └── open_spiel/               # OpenSpiel 源码与构建（子仓库或拷贝）
 ```
 

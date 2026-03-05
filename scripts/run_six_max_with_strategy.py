@@ -2,8 +2,8 @@
 """
 使用抽象策略在 6-max 环境中运行若干手牌。
 用法（项目根目录）：
-  .venv\\Scripts\\python.exe scripts\\run_six_max_with_strategy.py
-  .venv\\Scripts\\python.exe scripts\\run_six_max_with_strategy.py --strategy data/subgame_strategy_example.json --hands 5
+  python scripts/run_six_max_with_strategy.py
+  python scripts/run_six_max_with_strategy.py --strategy data/subgame_strategy_example.json --hands 5
 """
 from __future__ import annotations
 

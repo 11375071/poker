@@ -2,8 +2,8 @@
 """
 Leduc CFR+ 训练入口：训练至 exploitability < 0.01 并保存策略。
 用法（项目根目录）：
-  .venv\\Scripts\\python.exe scripts\\train_leduc_cfr.py
-  .venv\\Scripts\\python.exe scripts\\train_leduc_cfr.py --max_iterations 100000 --output data/leduc.json
+  python scripts/train_leduc_cfr.py
+  python scripts/train_leduc_cfr.py --max_iterations 100000 --output data/leduc.json
 """
 from __future__ import annotations
 

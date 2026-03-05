@@ -2,8 +2,8 @@
 """
 Leduc 策略评估：加载已保存策略，与随机 / 自身对战，输出期望收益与对局采样均值。
 用法（项目根目录）：
-  .venv\\Scripts\\python.exe scripts\\evaluate_leduc.py data/leduc_cfr_policy.json
-  .venv\\Scripts\\python.exe scripts\\evaluate_leduc.py data/leduc_cfr_policy.json --num_playouts 5000
+  python scripts/evaluate_leduc.py data/leduc_cfr_policy.json
+  python scripts/evaluate_leduc.py data/leduc_cfr_policy.json --num_playouts 5000
 """
 from __future__ import annotations
 
@@ -48,7 +48,7 @@ def main():
     path = Path(args.policy_path)
     if not path.exists():
         print(f"策略文件不存在: {path}")
-        print("请先运行: .venv\\Scripts\\python.exe scripts\\train_leduc_cfr.py")
+        print("请先运行: python scripts/train_leduc_cfr.py")
         return 1
 
     game, loaded_policy = load_tabular_policy(path)
